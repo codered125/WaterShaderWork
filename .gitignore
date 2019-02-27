@@ -23,14 +23,14 @@ $RECYCLE.BIN/
  
 .vs/
 
-Binaries/
+# Testing binariesCommits
+# Binaries/
 Intermediate/
 Saved/
-VRCrane.opensdf
-VRCrane.sdf
+*.opensdf
+*.sdf
 VRCrane.sln
 *.suo
-VRCrane.vc.db
 *.vc.db
 *.db
  
