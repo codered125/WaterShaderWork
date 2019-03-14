@@ -27,6 +27,7 @@ $RECYCLE.BIN/
 # Binaries/
 Intermediate/
 Saved/
+StarterContent/
 *.opensdf
 *.sdf
 VRCrane.sln
