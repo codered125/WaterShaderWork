@@ -6,8 +6,8 @@
 	{
 		"MajorVersion": 4,
 		"MinorVersion": 21,
-		"PatchVersion": 1,
-		"Changelist": 4613538,
+		"PatchVersion": 2,
+		"Changelist": 4753647,
 		"CompatibleChangelist": 4541578,
 		"IsLicenseeVersion": 0,
 		"IsPromotedBuild": 1,
@@ -24,6 +24,14 @@
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor-Cmd.exe",
 			"Type": "Executable"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/PixelShader/Binaries/Win64/UE4Editor-PixelShader.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/PixelShader/Binaries/Win64/UE4Editor-PixelShader.pdb",
+			"Type": "SymbolFile"
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/2D/Paper2D/Binaries/Win64/UE4Editor-Paper2D.dll",
@@ -1766,6 +1774,10 @@
 			"Type": "BuildResource"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/PixelShader/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/2D/Paper2D/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
@@ -2065,6 +2077,10 @@
 	"RuntimeDependencies": [
 		{
 			"Path": "$(ProjectDir)/EmptyCPP.uproject",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/PixelShader/PixelShader.uplugin",
 			"Type": "UFS"
 		},
 		{

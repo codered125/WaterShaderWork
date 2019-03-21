@@ -1,0 +1,20 @@
+{
+  "PluginFileVersion": 3,
+  "FriendlyName": "Pixel Shader",
+  "Version": 1,
+  "VersionName": "1.0",
+  "CreatedBy": "Moses",
+  "CreatedByURL": "",
+  "EngineVersion": "4.21.0",
+  "Description": "An example stand alone pixel shader that can be run from a plugin",
+  "Category": "Shader",
+
+  "Modules": [
+    {
+      "Name": "PixelShader",
+      "Type": "Runtime",
+      "LoadingPhase": "PostConfigInit",
+      "Installed" :  "True"
+    }
+  ]
+}
