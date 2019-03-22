@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "UniformBuffer.h"
+#include "RHICommandList.h"
 #include "Runtime/ShaderCore/Public/GlobalShader.h"
 
 /**
@@ -12,6 +13,7 @@ class FMyTestVS : public FGlobalShader
 {
 
 	DECLARE_EXPORTED_SHADER_TYPE(FMyTestVS, Global,  /*MYMODULE_API*/);
+public:
 	FMyTestVS()
 	{
 

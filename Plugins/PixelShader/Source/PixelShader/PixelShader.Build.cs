@@ -1,13 +1,19 @@
 using UnrealBuildTool;
+using System;
 using System.IO;
 
-public class PixelShader : ModuleRules
+namespace UnrealBuildTool.Rules
 {
-    public PixelShader(ReadOnlyTargetRules Target) : base(Target)
+    public class PixelShader : ModuleRules
     {
-        PrivateIncludePaths.AddRange(new string[] { "PixelShader/Private" });
-        PublicIncludePaths.AddRange(new string[] { "PixelShader/Public" });
+       // PrivatePCHHeaderFile = "Public/ShooterGame.h";
+        public PixelShader(ReadOnlyTargetRules Target) : base(Target)
+        {
+            PrivateIncludePaths.AddRange(new string[] { "PixelShader/Private" });
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Engine", "Core" });
+            PublicIncludePaths.AddRange(new string[] { "PixelShader/Public" });
+
+            PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "RenderCore", "ShaderCore", "RHI" });
+        }
     }
 }

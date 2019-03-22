@@ -1,0 +1,43 @@
+#pragma once
+
+struct TestingStructs
+{
+
+	MaterialFloat TestFunction(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
+	{
+		return dot(inDir1,inDir2);
+	}
+
+	MaterialFloat TestAdd(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
+	{
+		return TestFunction(inDir1,inDir2) * -1;
+	}
+
+	float2 TestPan(float inXSpeed, float inYSpeed, float2 inTexCoord, float inTime)
+	{
+		const float x = inTexCoord.x + (inXSpeed * inTime);
+		const float y = inTexCoord.y + (inYSpeed * inTime);
+		return float2(x ,y );
+	}
+	
+	MaterialFloat3 Wave(MaterialFloat2 direct, MaterialFloat inwaves, MaterialFloat2 inTexCoord, MaterialFloat inTime, MaterialFloat expo, MaterialFloat inheight)
+	{
+		float d = dot(inTexCoord, direct);
+		float w = d * waves;
+		MaterialFloat output = sin(w + inTime);
+		float normd = (output +1) / 2;
+		MaterialFloat output2 = pow(normd, expo);
+		MaterialFloat3 final = float3(0, 0, 1);
+		return (final * output2) * inheight;
+	}
+};
+
+
+TestingStructs test;
+
+return test.Wave(dir, waves , tc ,Time2, exponent2, height2);
+
+
+
+
+
