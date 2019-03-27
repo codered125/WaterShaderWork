@@ -47,17 +47,16 @@ struct TestingStructs
 	
 	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
 	{
-		float dirAndWaves = dot(inTexCoord, direct) * inwaves;
+		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
 		//Because ue4 sine is different to hlsl function
-		float applyTime = UE4Sine(dirAndWaves + inTime);
-		float normToRange = pow((applyTime +1) / 2 , expo);		
+		const float applyTime = UE4Sine(dirAndWaves + inTime);
+		const float normToRange = pow((applyTime +1) / 2 , expo);		
 		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
 	}
 };
 
 const static MaterialFloat PI = 3.1415926535897932f;
 TestingStructs test;
-
 return test.Wave(dir, waves, tc, Time2, exponent2, height2);
 
 //return test.TestPan(XSpeed, YSpeed , TexCoords1,Time );
