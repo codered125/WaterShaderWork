@@ -8,7 +8,7 @@ public class EmptyCPP : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "PixelShader", "ShaderCore", "RHI" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "PixelShader", "ShaderCore", "RHI", "Json", "JsonUtilities" });
 
         
         PrivateDependencyModuleNames.AddRange(new string[] {  });
