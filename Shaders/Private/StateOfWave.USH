@@ -1,0 +1,69 @@
+#pragma once
+#if PIXELSHADER
+	#define MaterialFloat half
+	#define MaterialFloat2 half2
+	#define MaterialFloat3 half3
+	#define MaterialFloat4 half4
+	#define MaterialFloat3x3 half3x3
+	#define MaterialFloat4x4 half4x4 
+	#define MaterialFloat4x3 half4x3 
+#else
+	// Material translated vertex shader code always uses floats, 
+	// Because it's used for things like world position and UVs
+	#define MaterialFloat float
+	#define MaterialFloat2 float2
+	#define MaterialFloat3 float3
+	#define MaterialFloat4 float4
+	#define MaterialFloat3x3 float3x3
+	#define MaterialFloat4x4 float4x4 
+	#define MaterialFloat4x3 float4x3 
+#endif
+struct TestingStructs
+{
+	MaterialFloat UE4Sine(MaterialFloat x)
+	{
+		MaterialFloat result = x * PI * 2;
+		result = sin(result);
+		return clamp(result, -1.f, 1.f);
+	}
+	
+	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
+	{
+		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
+		//Because ue4 sine is different to hlsl function
+		const float applyTime = UE4Sine(dirAndWaves + inTime);
+		const float normToRange = pow((applyTime +1) / 2 , expo);		
+		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
+	}
+
+	float3 StateOfWave(float2 direct, float2 inTexCoord, int instance, float inL, float inTime, float inheight)
+	{
+
+	float w = (2 / inL ) * instance;
+	float pC = speed * (2 / inL) * instance;
+	float dDotT = dot(direct, inTexCoord);
+	float3 output = inheight * (UE4Sine((dDotT * w) + inTime * pC));
+	return output;
+	}
+
+	float3 Main(float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
+	{
+		float3 output = float3(0.0f, 0.0f, 0.0f);
+		for(int i = 0; i < 2; ++i)
+		{
+			output = StateOfWave(direct, inTexCoord, i, inL, inTime, inheight);
+		}
+		return output;
+	}
+
+};
+
+const static MaterialFloat PI = 3.1415926535897932f;
+TestingStructs test;
+return test.Main(dir, texcoord, Len, Time2, speed, height2);
+
+
+
+
+
+

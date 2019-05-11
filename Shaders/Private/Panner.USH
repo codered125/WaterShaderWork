@@ -1,0 +1,63 @@
+#pragma once
+#if PIXELSHADER
+	#define MaterialFloat half
+	#define MaterialFloat2 half2
+	#define MaterialFloat3 half3
+	#define MaterialFloat4 half4
+	#define MaterialFloat3x3 half3x3
+	#define MaterialFloat4x4 half4x4 
+	#define MaterialFloat4x3 half4x3 
+#else
+	// Material translated vertex shader code always uses floats, 
+	// Because it's used for things like world position and UVs
+	#define MaterialFloat float
+	#define MaterialFloat2 float2
+	#define MaterialFloat3 float3
+	#define MaterialFloat4 float4
+	#define MaterialFloat3x3 float3x3
+	#define MaterialFloat4x4 float4x4 
+	#define MaterialFloat4x3 float4x3 
+#endif
+struct TestingStructs
+{
+
+	MaterialFloat TestFunction(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
+	{
+		return dot(inDir1,inDir2);
+	}
+
+	MaterialFloat TestAdd(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
+	{
+		return TestFunction(inDir1,inDir2) * -1;
+	}
+
+	float2 TestPan(float inXSpeed, float inYSpeed, float2 inTexCoord, float inTime)
+	{
+		const float x = inTexCoord.x + (inXSpeed * inTime);
+		const float y = inTexCoord.y + (inYSpeed * inTime);
+		return float2(x ,y );
+	}
+	
+	MaterialFloat UE4Sine(MaterialFloat x)
+	{
+		MaterialFloat result = x * PI * 2;
+		result = sin(result);
+		return clamp(result, -1.f, 1.f);
+	}
+	
+	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
+	{
+		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
+		//Because ue4 sine is different to hlsl function
+		const float applyTime = UE4Sine(dirAndWaves + inTime);
+		const float normToRange = pow((applyTime +1) / 2 , expo);		
+		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
+	}
+};
+
+const static MaterialFloat PI = 3.1415926535897932f;
+TestingStructs test;
+return test.TestPan(XSpeed, YSpeed , TexCoords1,Time );
+
+
+
