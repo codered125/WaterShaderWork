@@ -42,18 +42,13 @@ struct TestingStructs
 	float w = (2 / inL ) * instance;
 	float pC = speed * (2 / inL) * instance;
 	float dDotT = dot(direct, inTexCoord);
-	float3 output = inheight * (UE4Sine((dDotT * w) + inTime * pC));
+	float3 output = inheight * pow(UE4Sine((dDotT * w) + inTime * pC), 8);
 	return output;
 	}
 
 	float3 Main(float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
 	{
-		float3 output = float3(0.0f, 0.0f, 0.0f);
-		for(int i = 0; i < 2; ++i)
-		{
-			output = StateOfWave(direct, inTexCoord, i, inL, inTime, inheight);
-		}
-		return output;
+		return StateOfWave(direct, inTexCoord, 4, inL, inTime, inheight);
 	}
 
 };

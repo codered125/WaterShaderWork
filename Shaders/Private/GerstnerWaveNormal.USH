@@ -20,48 +20,58 @@
 #endif
 struct TestingStructs
 {
-
-	MaterialFloat TestFunction(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
-	{
-		return dot(inDir1,inDir2);
-	}
-
-	MaterialFloat TestAdd(MaterialFloat3 inDir1, MaterialFloat3 inDir2)
-	{
-		return TestFunction(inDir1,inDir2) * -1;
-	}
-
-	float2 TestPan(float inXSpeed, float inYSpeed, float2 inTexCoord, float inTime)
-	{
-		const float x = inTexCoord.x + (inXSpeed * inTime);
-		const float y = inTexCoord.y + (inYSpeed * inTime);
-		return float2(x ,y );
-	}
-	
 	MaterialFloat UE4Sine(MaterialFloat x)
 	{
 		MaterialFloat result = x * PI * 2;
 		result = sin(result);
 		return clamp(result, -1.f, 1.f);
 	}
+
+		MaterialFloat UE4Cos(MaterialFloat x)
+	{
+		MaterialFloat result = x * PI * 2;
+		result = cos(result);
+		return clamp(result, -1.f, 1.f);
+	}
 	
 	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
 	{
-		float C = float2(0.5, 0.5);
-		direct =  normalize(tc - C) / length(tc - C);
 		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
 		//Because ue4 sine is different to hlsl function
 		const float applyTime = UE4Sine(dirAndWaves + inTime);
 		const float normToRange = pow((applyTime +1) / 2 , expo);		
 		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
 	}
+
+	float3 GerstnerFunNormal(int instance, float steepness)
+	{
+	float3 output;
+	float w = (2 / Len ) * instance;
+	float pC = speed * (2 / Len) * instance;
+	//float dDotT = dot(dir, inTexCoord);
+	float wa = w * height2;
+	float Qi = steepness / (w * height2 * instance);
+	float co = UE4Cos(w * dot(dir, float2(p.x, p.y)) + pC * Time2);
+	float so = UE4Sine(w * dot(dir, float2(p.x, p.y)) + pC * Time2);
+	output.x = -(dir.x *  wa * co);
+	output.y = -(dir.y *  wa * co);
+	output.z = 1 - (Qi * wa * so);
+	return output;
+	}
+
+	float3 Main(float3 inp, float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
+	{
+		return  normalize(GerstnerFunNormal(4, 1.0));
+	}
+
 };
 
 const static MaterialFloat PI = 3.1415926535897932f;
 TestingStructs test;
-return test.Wave(dir, waves, tc, Time2, exponent2, height2);
+return test.Main(p, dir, texcoord, Len, Time2, speed, height2);
 
-//return test.TestPan(XSpeed, YSpeed , TexCoords1,Time );
+
+
 
 
 
