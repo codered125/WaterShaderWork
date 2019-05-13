@@ -47,8 +47,8 @@ struct TestingStructs
 	
 	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
 	{
-		float C = float2(0.5, 0.5);
-		direct =  normalize(tc - C) / length(tc - C);
+		//float C = float2(0.5, 0.5);
+		//direct =  normalize(tc - C);
 		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
 		//Because ue4 sine is different to hlsl function
 		const float applyTime = UE4Sine(dirAndWaves + inTime);

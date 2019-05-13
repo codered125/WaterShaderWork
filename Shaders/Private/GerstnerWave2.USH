@@ -53,7 +53,7 @@ struct TestingStructs
 	return output;
 	}
 
-	float3 GerstnerFunXY(int instance, float steepness)
+	float3 GerstnerFunXY2(int instance, float steepness)
 	{
 	float3 output;
 	float w = ((2* PI) / Len ) * instance;
@@ -70,7 +70,7 @@ struct TestingStructs
 	float3 Main(float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
 	{
 	
-		float3 output = GerstnerFunXY(1, 1.0);
+		float3 output = GerstnerFunXY2(1, 1.0);
 		return output;
 		//return float3(inTexCoord.x, inTexCoord.y, 0) + output;
 	}

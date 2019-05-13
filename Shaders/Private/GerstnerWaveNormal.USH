@@ -18,6 +18,8 @@
 	#define MaterialFloat4x4 float4x4 
 	#define MaterialFloat4x3 float4x3 
 #endif
+
+
 struct TestingStructs
 {
 	MaterialFloat UE4Sine(MaterialFloat x)
@@ -46,13 +48,13 @@ struct TestingStructs
 	float3 GerstnerFunNormal(int instance, float steepness)
 	{
 	float3 output;
-	float w = (2 / Len ) * instance;
-	float pC = speed * (2 / Len) * instance;
+	float w = ((2* PI) / Len ) * instance;
+	float pC = speed * ((2* PI) / Len) * instance;
 	//float dDotT = dot(dir, inTexCoord);
 	float wa = w * height2;
 	float Qi = steepness / (w * height2 * instance);
-	float co = UE4Cos(w * dot(dir, float2(p.x, p.y)) + pC * Time2);
-	float so = UE4Sine(w * dot(dir, float2(p.x, p.y)) + pC * Time2);
+	float co = UE4Cos(w * dot(dir, float2(p.x, p.y)) + (pC * Time2));
+	float so = UE4Sine(w * dot(dir, float2(p.x, p.y)) + (pC * Time2));
 	output.x = -(dir.x *  wa * co);
 	output.y = -(dir.y *  wa * co);
 	output.z = 1 - (Qi * wa * so);
@@ -61,7 +63,7 @@ struct TestingStructs
 
 	float3 Main(float3 inp, float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
 	{
-		return  normalize(GerstnerFunNormal(4, 1.0));
+		return  normalize(GerstnerFunNormal(2, 1.0));
 	}
 
 };
