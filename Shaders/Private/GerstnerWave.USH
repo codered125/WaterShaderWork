@@ -33,33 +33,14 @@ struct TestingStructs
 		result = cos(result);
 		return clamp(result, -1.f, 1.f);
 	}
-	
-	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
-	{
-		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
-		//Because ue4 sine is different to hlsl function
-		const float applyTime = UE4Sine(dirAndWaves + inTime);
-		const float normToRange = pow((applyTime +1) / 2 , expo);		
-		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
-	}
-
-	float3 StateOfWave(float2 direct, float2 inTexCoord, int instance, float inL, float inTime, float inheight)
-	{
-
-	float w = ((2* PI) / inL ) * instance;
-	float pC = speed * ((2* PI) / inL) * instance;
-	float dDotT = dot(direct, inTexCoord);
-	float3 output = inheight * (UE4Sine((dDotT * w) + inTime * pC));
-	return output;
-	}
 
 	float3 GerstnerFunXY(int instance, float steepness)
 	{
 	float3 output;
 	float w = ((2* PI) / Len ) * instance;
-	float pC = speed * ((2* PI) / Len) * instance;
+	float pC = speed * ((2* PI) / Len);
 	//float dDotT = dot(dir, inTexCoord);
-	float Qi = steepness / (w * height2 * instance);
+	float Qi = steepness / (w * height2);
 
 	output.x = Qi * height2 * (dir.x * (UE4Cos(w * dot(dir, texcoord) + (pC * Time2))));
 	output.y = Qi * height2 * (dir.y * (UE4Cos(w * dot(dir, texcoord) + (pC * Time2))));
@@ -70,7 +51,7 @@ struct TestingStructs
 	float3 Main(float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
 	{
 	
-		float3 output = GerstnerFunXY(1, 1.0);
+		float3 output = GerstnerFunXY(1,  0.5);
 		return output;
 		//return float3(inTexCoord.x, inTexCoord.y, 0) + output;
 	}

@@ -35,24 +35,15 @@ struct TestingStructs
 		result = cos(result);
 		return clamp(result, -1.f, 1.f);
 	}
-	
-	float3 Wave(float2 direct, float inwaves, float2 inTexCoord, float inTime, float expo, float inheight)
-	{
-		const float dirAndWaves = dot(inTexCoord, direct) * inwaves;
-		//Because ue4 sine is different to hlsl function
-		const float applyTime = UE4Sine(dirAndWaves + inTime);
-		const float normToRange = pow((applyTime +1) / 2 , expo);		
-		return MaterialFloat3(0.0f, 0.0f, 1.0f) * normToRange * inheight;
-	}
 
 	float3 GerstnerFunNormal(int instance, float steepness)
 	{
 	float3 output;
 	float w = ((2* PI) / Len ) * instance;
-	float pC = speed * ((2* PI) / Len) * instance;
+	float pC = speed * ((2* PI) / Len);
 	//float dDotT = dot(dir, inTexCoord);
 	float wa = w * height2;
-	float Qi = steepness / (w * height2 * instance);
+	float Qi = steepness / (w * height2);
 	float co = UE4Cos(w * dot(dir, float2(p.x, p.y)) + (pC * Time2));
 	float so = UE4Sine(w * dot(dir, float2(p.x, p.y)) + (pC * Time2));
 	output.x = -(dir.x *  wa * co);
@@ -63,7 +54,7 @@ struct TestingStructs
 
 	float3 Main(float3 inp, float2 direct, float2 inTexCoord,  float inL,  float inTime, float speed, float inheight)
 	{
-		return  normalize(GerstnerFunNormal(2, 1.0));
+		return  normalize(GerstnerFunNormal(1,  0.5));
 	}
 
 };
