@@ -1,0 +1,47 @@
+#pragma once
+#if PIXELSHADER
+	#define MaterialFloat half
+	#define MaterialFloat2 half2
+	#define MaterialFloat3 half3
+	#define MaterialFloat4 half4
+	#define MaterialFloat3x3 half3x3
+	#define MaterialFloat4x4 half4x4 
+	#define MaterialFloat4x3 half4x3 
+#else
+	// Material translated vertex shader code always uses floats, 
+	// Because it's used for things like world position and UVs
+	#define MaterialFloat float
+	#define MaterialFloat2 float2
+	#define MaterialFloat3 float3
+	#define MaterialFloat4 float4
+	#define MaterialFloat3x3 float3x3
+	#define MaterialFloat4x4 float4x4 
+	#define MaterialFloat4x3 float4x3 
+#endif
+struct TestingStructs
+{
+	MaterialFloat UE4Sine(MaterialFloat x)
+	{
+		MaterialFloat result = x * PI * 2;
+		result = sin(result);
+		return clamp(result, -1.f, 1.f);
+	}
+	
+	float CreateLine(float2 InTexCoord, float InLineSize, float InNoise)
+	{
+		const float Localnoise = InNoise; 	
+		const float MinVal  = step(0.5 - InLineSize, InTexCoord.x + InNoise);
+		const float MaxVal  = step(InTexCoord.x  + InNoise , 0.5 + InLineSize);
+		return MinVal * MaxVal;
+	}
+};
+
+const static MaterialFloat PI = 3.1415926535897932f;
+TestingStructs test;
+return test.CreateLine(texcoord, linesize, noiseValue);
+
+
+
+
+
+
